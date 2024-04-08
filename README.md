@@ -1,3 +1,6 @@
+# 2024 Update
+This is an archieve repo of a multi-robot project in 2022.
+
 # ARX_MINI_ROS
 
 This is a ROS1 package for ARX_MINI. <br>
