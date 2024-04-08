@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- arg name="use_sim_time" default="true"/ -->
+  <arg name="gui" 					default="true"/>
+  <arg name="headless" 				default="false"/>
+  <arg name="debug" 					default="false"/>
+  
+  
+  <!-- ================== PUT YOUR PARAMS HERE =================== -->
+  <arg name="robot_name"  				default="/"/>
+  <arg if="$(eval arg('robot_name') == '/')"  	name="frame_prefix" value="" />
+  <arg unless="$(eval arg('robot_name') == '/')" 	name="frame_prefix" value="$(arg robot_name)/" />
+  <arg name="x_pos" 					default="0.0"/>
+  <arg name="y_pos" 					default="0.0"/>
+  <arg name="z_pos" 					default="0.05"/>
+  <arg name="yaw"   					default="0.0"/>
+
+  <!-- ====================== BRINGUP ROBOT ======================= -->
+  <group ns="$(arg robot_name)">
+    <param name="tf_prefix" value="$(arg robot_name)"/>
+    <param name="robot_description" textfile="$(find arx_mini_description)/urdf/arx_mini_description.urdf" />
+    
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model $(arg robot_name) -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -Y $(arg yaw) -J $(arg frame_prefix)joint1 3.141593 -param robot_description">
+    </node>
+	
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="20.0" />
+    </node>
+    
+    <node name="footprint_to_base_link" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 $(arg frame_prefix)base_footprint $(arg frame_prefix)base_link"/>
+    
+    <!-- ======================= Fused Odometry ====================== -->
+    <include file="$(find arx_mini_bringup)/launch/include/lsm_lidar.launch">
+      <arg name="frame_prefix"	value="$(arg frame_prefix)"/>
+    </include>
+    
+    <include file="$(find arx_mini_bringup)/launch/include/localization_fusion.launch">
+      <arg name="robot_name"		value="$(arg robot_name)"/>
+      <arg name="frame_prefix"	value="$(arg frame_prefix)"/>
+    </include>
+    
+    <node name="gazebo_messages_converter" pkg="arx_mini_gazebo" type="gazebo_messages_converter.py"/>
+    
+  </group>
+</launch>

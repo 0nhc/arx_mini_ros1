@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name" 	default="/" />
+  <!-- ==================== LAUNCH GAZEBO WORLD ==================== -->
+  <include file="$(find arx_mini_gazebo)/launch/bringup_world.launch"/>
+  
+  <!-- ====================== GENERATE ROBOT ====================== -->
+  <include file="$(find arx_mini_gazebo)/launch/bringup_mobile_manipulator.launch">
+    <arg name="robot_name" 	value="$(arg robot_name)" />
+    <arg name="x_pos" 		value="0.0"/>
+    <arg name="y_pos" 		value="0.0"/>
+    <arg name="z_pos" 		value="0.06"/>
+    <arg name="yaw"   		value="0.0"/>
+  </include>
+  
+</launch>

@@ -1,0 +1,6 @@
+<launch>
+  <arg name="robot_name" default="/" />
+  <node pkg="teleop_twist_keyboard" name="teleop_twist_keyboard" type="teleop_twist_keyboard.py">
+    <remap from="cmd_vel" to="$(arg robot_name)/cmd_vel"/>
+  </node>
+</launch>

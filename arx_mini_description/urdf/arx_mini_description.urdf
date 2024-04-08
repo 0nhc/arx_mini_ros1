@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="arx_mini_description">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.015887 -0.00054953 0.028848"
+        rpy="0 0 0" />
+      <mass
+        value="15.062" />
+      <inertia
+        ixx="0.0021916"
+        ixy="-3.614E-06"
+        ixz="8.4882E-06"
+        iyy="0.0032298"
+        iyz="2.6215E-06"
+        izz="0.004925" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="laser">
+    <inertial>
+      <origin
+        xyz="-0.00056545 -1.4938E-05 -0.011701"
+        rpy="0 0 0" />
+      <mass
+        value="1.6538" />
+      <inertia
+        ixx="7.8865E-05"
+        ixy="4.8472E-08"
+        ixz="2.1848E-06"
+        iyy="7.519E-05"
+        iyz="2.886E-08"
+        izz="0.00010995" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/laser.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 0.4" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/laser.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_link_to_laser"
+    type="fixed">
+    <origin
+      xyz="0.133 0 0.107171615364778"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="laser" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_wheel_link">
+    <inertial>
+      <origin
+        xyz="-1.3878E-17 -0.0080105 -1.3878E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.80724" />
+      <inertia
+        ixx="2.6957E-05"
+        ixy="-7.5305E-20"
+        ixz="1.469E-21"
+        iyy="4.9447E-05"
+        iyz="2.2384E-20"
+        izz="2.6957E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/left_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/left_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_link_to_left_wheel"
+    type="continuous">
+    <origin
+      xyz="-0.06 0.131 -0.035"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="right_wheel_link">
+    <inertial>
+      <origin
+        xyz="2.7756E-17 0.0080105 -1.3878E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.80724" />
+      <inertia
+        ixx="2.6957E-05"
+        ixy="-7.4963E-20"
+        ixz="-1.469E-21"
+        iyy="4.9447E-05"
+        iyz="-2.3687E-20"
+        izz="2.6957E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/right_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/right_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_link_to_right_wheel"
+    type="continuous">
+    <origin
+      xyz="-0.06 -0.131 -0.035"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="caster_holder_link">
+    <inertial>
+      <origin
+        xyz="-0.024794 0 -0.018851"
+        rpy="0 0 0" />
+      <mass
+        value="0.25767" />
+      <inertia
+        ixx="1.1549E-05"
+        ixy="3.8856E-21"
+        ixz="-2.1936E-06"
+        iyy="1.0961E-05"
+        iyz="-8.0435E-22"
+        izz="1.0298E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/caster_holder_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/caster_holder_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_link_to_caster_holder"
+    type="continuous">
+    <origin
+      xyz="0.11 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="caster_holder_link" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="caster_wheel_link">
+    <inertial>
+      <origin
+        xyz="2.7756E-17 0.01 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.1838" />
+      <inertia
+        ixx="2.8557E-06"
+        ixy="-7.698E-22"
+        ixz="9.2088E-39"
+        iyy="4.5367E-06"
+        iyz="-4.5492E-23"
+        izz="2.8557E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/caster_wheel_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arx_mini_description/meshes/caster_wheel_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_link_to_caster_wheel"
+    type="continuous">
+    <origin
+      xyz="-0.03 -0.01 -0.045"
+      rpy="0 0 0" />
+    <parent
+      link="caster_holder_link" />
+    <child
+      link="caster_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  
+  
+  
+  
+  
+  <link name="imu_link">
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+    <inertial>
+      <mass value="1e-2"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
+  </link>
+  <joint name="base_link_to_imu_link" type="fixed">
+    <axis xyz="0 1 0"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+  </joint>
+
+
+  <transmission name="base_link_to_left_wheel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_link_to_left_wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="base_link_to_left_wheel_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+  <transmission name="base_link_to_right_wheel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_link_to_right_wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="base_link_to_right_wheel_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="base_link_to_caster_holder_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_link_to_caster_holder_wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="base_link_to_caster_holder_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+  <transmission name="base_link_to_caster_wheel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_link_to_caster_wheel_wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="base_link_to_caster_wheel_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+  <gazebo reference="base_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="base_footprint">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="imu_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="left_wheel_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="right_wheel_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="caster_holder_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="caster_wheel_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="laser">
+    <material>Gazebo/White</material>
+  </gazebo>
+
+<gazebo>
+  <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+    <updateRate> 50 </updateRate>
+    <rosDebugLevel>Debug</rosDebugLevel>
+    <leftJoint>base_link_to_left_wheel</leftJoint>
+    <rightJoint>base_link_to_right_wheel</rightJoint>
+    <wheelSeparation>0.241</wheelSeparation>
+    <wheelDiameter>0.06</wheelDiameter>
+    <wheelAcceleration>1.0</wheelAcceleration>
+    <wheelTorque>20</wheelTorque>
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>gazebo/wheel_odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <robotBaseFrame>base_footprint</robotBaseFrame>
+    <odometrySource>world</odometrySource>
+    <publishWheelTF>false</publishWheelTF>
+    <publishOdom>true</publishOdom>
+    <publishOdomTF>false</publishOdomTF>
+    <publishTF>false</publishTF>
+    <publishWheelJointState>true</publishWheelJointState>
+    <legacyMode>false</legacyMode>
+  </plugin>
+</gazebo>
+
+  <gazebo reference="laser">
+    <sensor name="head_hokuyo_sensor" type="ray">
+      <!-- <sensor type="gpu_ray" name="head_hokuyo_sensor">   -->
+      <!-- GPU -->
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>15</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.1415926</min_angle>
+            <max_angle>3.1415926</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.05</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise parameters based on published spec for Hokuyo laser
+               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+               reading. -->
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <!-- GPU版本 -->
+      <!-- <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_gpu_laser.so">  -->
+      <plugin filename="libgazebo_ros_laser.so" name="gazebo_ros_head_hokuyo_controller">
+        <topicName>scan</topicName>
+        <frameName>laser</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+
+  <gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>__default_topic__</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>gazebo/imu/data</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>100.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+</robot>

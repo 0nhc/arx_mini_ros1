@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name" 	default="/" />
+  <arg name="map" 		default="buct_library.yaml" />
+  <arg name="use_sim_time" 	default="false" />
+  
+  <arg if="$(eval arg('robot_name') == '/')"  name="frame_prefix" value="" />
+  <arg unless="$(eval arg('robot_name') == '/')" name="frame_prefix" value="$(arg robot_name)/" />
+    
+  <group ns="$(arg robot_name)">
+  
+    <param name="/use_sim_time" value="$(arg use_sim_time)"/>
+  
+    <!-- ============ Bring_Up ============ -->
+    <include file="$(find arx_mini_bringup)/launch/bringup.launch"/>
+  
+    
+    <!-- =========== Map Server =========== -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find arx_mini_navigation)/maps/$(arg map)">
+      <param name="frame_id" value="$(arg frame_prefix)map" />
+    </node>
+
+    <!-- ========== Localization ========== -->
+    <node pkg="iris_lama_ros" type="loc2d_ros" name="loc2d_ros" output="screen">
+      <param name="global_frame_id" 	value="$(arg frame_prefix)map"/>
+      <param name="odom_frame_id" 	value="$(arg frame_prefix)odom"/>
+      <param name="base_frame_id" 	value="$(arg frame_prefix)base_footprint"/>
+      <param name="scan_topic" 	value="scan"/>
+    </node>
+
+
+  </group>   
+</launch>

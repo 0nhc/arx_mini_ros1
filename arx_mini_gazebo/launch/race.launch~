@@ -1,0 +1,71 @@
+<launch>
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <!-- arg name="paused" default="true"/ -->
+<!--   <arg name="use_sim_time" default="true"/> -->
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <!-- <remap from="robot/laser/scan" to="/scan"/> -->
+  
+  <arg name="rb1"  default="rb1"/>
+  <arg name="rb2" default="rb2"/>
+  <arg name="rb3" default="rb3"/>
+
+  <arg name="rb1_x_pos" default="0.0"/>
+  <arg name="rb1_y_pos" default="0.0"/>
+  <arg name="rb1_z_pos" default="0.05"/>
+  <arg name="rb1_yaw"   default="0.0"/>
+
+  <arg name="rb2_x_pos" default="-0.4"/>
+  <arg name="rb2_y_pos" default="0.0"/>
+  <arg name="rb2_z_pos" default="0.05"/>
+  <arg name="rb2_yaw"   default="0.0"/>
+
+  <arg name="rb3_x_pos" default="-0.8"/>
+  <arg name="rb3_y_pos" default="0.0"/>
+  <arg name="rb3_z_pos" default="0.05"/>
+  <arg name="rb3_yaw"   default="0.0"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find gazebo_pkg)/world/mult.world"/> 
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+  </include>
+  
+  <group ns="$(arg rb1)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find gazebo_pkg)/urdf/waking_robot.xacro' bodyframe:=$(arg rb1) ns:=$(arg rb1)" />
+
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model $(arg rb1) -x $(arg rb1_x_pos) -y $(arg rb1_y_pos) -z $(arg rb1_z_pos) -Y $(arg rb1_yaw) -param robot_description"/>
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="20.0" />
+    </node>
+  </group>
+
+  <group ns="$(arg rb2)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find gazebo_pkg)/urdf/waking_robot.xacro' bodyframe:=$(arg rb2) ns:=$(arg rb2)" />
+
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model $(arg rb2) -x $(arg rb2_x_pos) -y $(arg rb2_y_pos) -z $(arg rb2_z_pos) -Y $(arg rb2_yaw) -param robot_description"/>
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="20.0" />
+    </node>
+  </group>
+
+  <group ns="$(arg rb3)">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find gazebo_pkg)/urdf/waking_robot.xacro' bodyframe:=$(arg rb3) ns:=$(arg rb3)" />
+
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model $(arg rb3) -x $(arg rb3_x_pos) -y $(arg rb3_y_pos) -z $(arg rb3_z_pos) -Y $(arg rb3_yaw) -param robot_description"/>
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="20.0" />
+    </node>
+  </group>
+
+</launch>

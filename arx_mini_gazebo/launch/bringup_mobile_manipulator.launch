@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- arg name="use_sim_time" default="true"/ -->
+  <arg name="gui" 					default="true"/>
+  <arg name="headless" 				default="false"/>
+  <arg name="debug" 					default="false"/>
+  
+  
+  <!-- ================== PUT YOUR PARAMS HERE =================== -->
+  <arg name="robot_name"  				default="/"/>
+  <arg if="$(eval arg('robot_name') == '/')"  	name="frame_prefix" value="" />
+  <arg unless="$(eval arg('robot_name') == '/')" 	name="frame_prefix" value="$(arg robot_name)/" />
+  <arg name="robot_description" 			default="$(find arx_mini_description)/urdf/arx_mini_with_manipulator.urdf"/>
+  <arg name="x_pos" 					default="0.0"/>
+  <arg name="y_pos" 					default="0.0"/>
+  <arg name="z_pos" 					default="0.05"/>
+  <arg name="yaw"   					default="0.0"/>
+
+  <arg name="pipeline" default="ompl" />
+  <arg name="gazebo_gui" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="ros_control_file"   default="$(find arx_mini_gazebo)/config/ros_control/ros_control.yaml" />
+  <arg name="initial_joint_positions" doc="Initial joint configuration of the robot"
+     default=" -J joint1 0 -J joint2 0 -J joint3 0 -J joint4 0 -J gripper 0.005 -J gripper_sub 0.005"/>
+    
+  <!-- ====================== BRINGUP ROBOT ======================= -->
+  <group ns="$(arg robot_name)">
+    <param name="tf_prefix" value="$(arg robot_name)"/>
+    <param name="robot_description" textfile="$(arg robot_description)" />
+    
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model $(arg robot_name) -param robot_description
+	-x $(arg x_pos)
+	-y $(arg y_pos)
+	-z $(arg z_pos)
+	-Y $(arg yaw)"/>
+	
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="20.0" />
+    </node>
+    
+    <node name="footprint_to_base_link" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 $(arg frame_prefix)base_footprint $(arg frame_prefix)base_link"/>
+    
+    <!-- ======================= Fused Odometry ====================== -->
+    <include file="$(find arx_mini_bringup)/launch/include/lsm_lidar.launch">
+      <arg name="frame_prefix"	value="$(arg frame_prefix)"/>
+    </include>
+    
+    <include file="$(find arx_mini_bringup)/launch/include/localization_fusion.launch">
+      <arg name="robot_name"		value="$(arg robot_name)"/>
+      <arg name="frame_prefix"	value="$(arg frame_prefix)"/>
+    </include>
+    
+    <node name="gazebo_messages_converter" pkg="arx_mini_gazebo" type="gazebo_messages_converter.py"/>
+    
+    <rosparam file="$(arg ros_control_file)" command="load"/>
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
+      joint_states_controller
+      joint1_position_controller
+      joint2_position_controller
+      joint3_position_controller
+      joint4_position_controller
+      gripper_position_controller
+      gripper_sub_position_controller"/>
+
+  </group>
+</launch>

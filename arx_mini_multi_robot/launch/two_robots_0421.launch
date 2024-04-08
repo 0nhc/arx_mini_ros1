@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="rviz" default="true"/>
+
+  <node name="robot" pkg="arx_mini_multi_robot" type="dwa0421.py" output="screen" >
+    <param name="selfname" value="arx2" />
+    <param name="target" value="arx1 1.0 0.0" />
+  </node>
+  
+  <node name="map_to_map1" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0  map arx1/map"/>
+  <node name="map_to_map2" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0  map arx2/map"/>
+  
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" required="true"
+        args="-d $(find arx_mini_multi_robot)/rviz/multi.rviz"/>
+</launch>

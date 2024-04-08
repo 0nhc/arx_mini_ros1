@@ -1,0 +1,18 @@
+topics:
+  -
+    topic: /arx1/odom  #  topic name
+    type: nav_msgs/msg/Odometry  # ROS2 type name
+    queue_size: 10 # For the publisher back to ROS1
+
+  -
+    topic: /tf  #  topic name
+    type: tf2_msgs/msg/TFMessage  # ROS2 type name
+    queue_size: 10 # For the publisher back to ROS1
+
+  -
+    topic: /tf_static  #  topic name
+    type: tf2_msgs/msg/TFMessage  # ROS2 type name
+    queue_size: 10 # For the publisher back to ROS1
+    
+   
+

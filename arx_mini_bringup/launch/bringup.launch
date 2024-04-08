@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<launch>
+  <!--=====PUT YOUR ROBOT NAME HERE=====-->
+  <arg name="robot_name" default="/" />
+  <!--=====PUT YOUR ROBOT NAME HERE=====-->
+  
+  <arg name="is_debug" default="false" />
+  <arg if="$(eval arg('robot_name') == '/')"  name="frame_prefix" value="" />
+  <arg unless="$(eval arg('robot_name') == '/')" name="frame_prefix" value="$(arg robot_name)/" />
+  
+  <group ns="$(arg robot_name)">
+    <param name="tf_prefix" value="$(arg robot_name)"/>
+    
+    
+    
+    
+    <!-- ====================== Chassis controller ====================== -->
+    <node name="robot" pkg="rcbigcar" type="robot" respawn="true" clear_params="true">
+        <param name="IsDebug" 		value="$(arg is_debug)" />
+        <param name="imu_frame_id" 		value="$(arg frame_prefix)imu_link" />
+        <param name="odom_header_frame_id" 	value="$(arg frame_prefix)odom" />
+        <param name="odom_child_frame_id" 	value="$(arg frame_prefix)base_footprint" />
+    </node>
+    <node name="footprint_to_base_link" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 $(arg frame_prefix)base_footprint $(arg frame_prefix)base_link"/>
+    <node name="base_to_imu_link" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 $(arg frame_prefix)base_link $(arg frame_prefix)imu_link"/>
+    
+    
+    
+    
+    <!-- ======================= Rplidar A2 Node ======================== -->
+    <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+        <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
+        <param name="serial_baudrate"     type="int"    value="115200"/>
+        <param name="frame_id"            type="string" value="$(arg frame_prefix)laser"/>
+        <param name="inverted"            type="bool"   value="false"/>
+        <param name="angle_compensate"    type="bool"   value="true"/>
+    </node>
+    <node name="base_link_to_laser" pkg="tf2_ros" type="static_transform_publisher" args="0.2 0 0 -3.141593 0 0 $(arg frame_prefix)base_link $(arg frame_prefix)laser"/>
+
+
+
+
+    <!-- ======================= Fused Odometry ====================== -->
+    <include file="$(find arx_mini_bringup)/launch/include/localization_fusion.launch">
+      <arg name="robot_name"		value="$(arg robot_name)"/>
+      <arg name="frame_prefix"	value="$(arg frame_prefix)"/>
+    </include>
+    
+    
+    
+    
+  </group>
+</launch>

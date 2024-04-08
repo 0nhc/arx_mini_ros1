@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name" 	default="/" />
+  <arg name="rviz" 		default="true"/>
+  <arg name="map" 		default="gazebo.yaml" />
+  <arg name="use_sim_time" 	default="false" />
+  
+  <arg if="$(eval arg('robot_name') == '/')"  name="frame_prefix" value="" />
+  <arg unless="$(eval arg('robot_name') == '/')" name="frame_prefix" value="$(arg robot_name)/" />
+    
+  <group ns="$(arg robot_name)">
+    <param name="/use_sim_time" value="$(arg use_sim_time)"/>
+    <!-- =========== Map Server =========== -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find arx_mini_navigation)/maps/$(arg map)">
+      <param name="frame_id" value="$(arg frame_prefix)map" />
+    </node>
+
+    <!-- ========== Localization ========== -->
+    <node pkg="iris_lama_ros" type="loc2d_ros" name="loc2d_ros" output="screen">
+      <param name="global_frame_id" value="$(arg frame_prefix)map"/>
+      <param name="odom_frame_id" value="$(arg frame_prefix)odom"/>
+      <param name="base_frame_id" value="$(arg frame_prefix)base_link"/>
+      <param name="scan_topic" value="scan"/>
+    </node>
+  
+    <!-- ============ Move_Base ============ -->
+    <include file="$(find arx_mini_navigation)/launch/include/move_base.launch"/>
+          
+    <!-- =========== Multi_Goals =========== -->
+    <!--include file="$(find buct_arx_navigation)/launch/include/multi_goals.launch"/-->
+    
+    <!-- ============== Rviz ==============-->
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" required="true"
+       args="-d $(find arx_mini_navigation)/rviz/navigation.rviz"/>
+  </group>
+          
+</launch>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="buct_arx_navigation" type="multi_goals.py" respawn="false" name="multi_goals" output="screen">
+        <param name="goalListX" value="0.68, 10.26, -4.45, -3.27, 0.68, 12.94, 10.26, -4.45, -3.27" />
+        <param name="goalListY" value="14.51, -7.59, -6.34, 15.45, 14.51, 13.12, -7.59, -6.34, 15.45" />
+        <param name="goalListYaw" value="-12.90, 169.91, 173.98, 80.77, -12.90, 8.000, 169.91, 173.98, 80.77" />
+    </node>
+</launch>
+
